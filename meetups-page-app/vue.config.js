@@ -1,3 +1,11 @@
 module.exports = {
-  lintOnSave: false
+  devServer: {
+    disableHostCheck: true,
+    proxy: {
+      '/api': {
+        target: process.env.API_PROXY_TARGET,
+        changeOrigin: true,
+      },
+    },
+  },
 }
