@@ -12,6 +12,32 @@ export function getMeetupCoverLink (meetup) {
   return `${API_URL}/images/${meetup.imageId}`
 }
 
+export async function login (email, password) {
+  return fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email, password
+    })
+  }).then((res) => {
+    return res.json()
+  })
+}
+
+export async function register (email, fullname, password) {
+  return fetch(`${API_URL}/auth/register`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ email, fullname, password })
+  }).then((res) => res.json())
+}
+
 export const agendaItemTitles = {
   registration: 'Регистрация',
   opening: 'Открытие',
