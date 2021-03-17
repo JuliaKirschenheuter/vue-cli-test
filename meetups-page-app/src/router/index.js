@@ -48,11 +48,13 @@ const routes = [
   {
     path: '/meetups/create',
     name: 'create-meetup',
+    props: true,
     component: () => import('@/views/CreateNewMeetup')
   },
   {
     path: '/meetups/:meetupId/edit',
     name: 'edit-meetup',
+    props: true,
     component: () => import('@/views/EditMeetup')
   },
   {
@@ -64,6 +66,16 @@ const routes = [
     path: '/register',
     name: 'register',
     component: () => import('@/views/Register')
+  },
+  {
+    path: '/logout',
+    redirect: '/page-unknown',
+    component: () => import('@/views/LogoutPage')
+  },
+  {
+    path: '*',
+    name: '/page-unknown',
+    component: () => import('@/views/Page404')
   }
 ]
 

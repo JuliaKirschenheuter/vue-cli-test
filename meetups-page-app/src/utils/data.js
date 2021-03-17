@@ -59,3 +59,33 @@ export const agendaItemIcons = {
   afterparty: 'cal-sm',
   other: 'cal-sm'
 }
+
+export function buildAgendaItem () {
+  return {
+    id: Math.random(),
+    startsAt: '00:00',
+    endsAt: '00:00',
+    type: 'other',
+    title: null,
+    description: null,
+    speaker: null,
+    language: null
+  }
+}
+
+export const getAgendaItemTypes = () => [
+  { value: 'registration', text: 'Регистрация' },
+  { value: 'opening', text: 'Открытие' },
+  { value: 'break', text: 'Перерыв' },
+  { value: 'coffee', text: 'Coffee Break' },
+  { value: 'closing', text: 'Закрытие' },
+  { value: 'afterparty', text: 'Afterparty' },
+  { value: 'talk', text: 'Доклад' },
+  { value: 'other', text: 'Другое' }
+]
+
+export const getTalkLanguages = () => [
+  { value: null, text: 'Не указано', id: Math.random() },
+  { value: 'RU', text: 'RU', id: Math.random() },
+  { value: 'EN', text: 'EN', id: Math.random() }
+]

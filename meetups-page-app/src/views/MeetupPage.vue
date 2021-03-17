@@ -6,6 +6,12 @@
       <h1 class="meetup-cover__title" v-if="meetup.title">{{ meetup.title }}</h1>
     </div>
     <div class="container">
+      <div class="buttons">
+        <button type="button" class="button button_secondary">Участвовать</button>
+        <button type="button" class="button button_secondary">Отменить участие</button>
+        <button class="button button_secondary" @click="go('edit-meetup')">Редактировать</button>
+        <button type="button" class="button button_secondary">Удалить</button>
+      </div>
       <div class="meetup">
         <div class="meetup__content">
           <content-tabs :tabs="tabs">
@@ -53,11 +59,26 @@ export default {
   methods: {
     setMeetup (meetup) {
       this.meetup = meetup
+    },
+
+    go (pageString) {
+      this.$router.push({
+        name: pageString,
+        params: {
+          meetup: this.meetup
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
-
+.buttons {
+  padding-top: 40px;
+  margin: 0 auto;
+}
+.button_secondary {
+  margin-right: 10px;
+}
 </style>
