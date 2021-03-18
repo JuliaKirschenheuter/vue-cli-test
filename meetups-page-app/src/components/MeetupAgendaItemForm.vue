@@ -133,12 +133,15 @@ export default {
 
         const oldEndsAtMinutes = this.makeMinutesFromData(this.agendaItem_.endsAt)
         const newEndsAtMinutes = (oldEndsAtMinutes + differenceStartAtMinutes + 24 * 60) % (24 * 60)
-        const newMinutes = newEndsAtMinutes % 60
+        let newMinutes = newEndsAtMinutes % 60
 
         let newEndsAtHour = (newEndsAtMinutes / 60).toFixed(0)
 
         if (newEndsAtHour < 10) {
           newEndsAtHour = `0${newEndsAtHour}`
+        }
+        if (newMinutes < 10) {
+          newMinutes = `0${newMinutes}`
         }
 
         this.agendaItem_.endsAt = `${newEndsAtHour}:${newMinutes}`

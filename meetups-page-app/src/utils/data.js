@@ -73,6 +73,18 @@ export function buildAgendaItem () {
   }
 }
 
+export function buildEmptyMeetup () {
+  return {
+    id: Math.random().toFixed(1),
+    title: '',
+    description: '',
+    imageId: null,
+    date: new Date(),
+    place: '',
+    agenda: []
+  }
+}
+
 export const getAgendaItemTypes = () => [
   { value: 'registration', text: 'Регистрация' },
   { value: 'opening', text: 'Открытие' },

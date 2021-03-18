@@ -9,7 +9,7 @@
       <div class="buttons">
         <button type="button" class="button button_secondary">Участвовать</button>
         <button type="button" class="button button_secondary">Отменить участие</button>
-        <button class="button button_secondary" @click="go('edit-meetup')">Редактировать</button>
+        <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetupId: meetup.id } }">Редактировать</router-link>
         <button type="button" class="button button_secondary">Удалить</button>
       </div>
       <div class="meetup">
@@ -59,15 +59,6 @@ export default {
   methods: {
     setMeetup (meetup) {
       this.meetup = meetup
-    },
-
-    go (pageString) {
-      this.$router.push({
-        name: pageString,
-        params: {
-          meetup: this.meetup
-        }
-      })
     }
   }
 }

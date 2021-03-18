@@ -35,16 +35,6 @@
         <component :is="viewComponent"
                    :meetups="filteredMeetups"></component>
       </keep-alive>
-<!--      <meetups-list-->
-<!--        v-if="filter.view === '' || filter.view === 'list'"-->
-<!--        :meetups="filteredMeetups"-->
-<!--        key="list"-->
-<!--      ></meetups-list>-->
-<!--      <meetups-calendar-->
-<!--        v-else-if="filter.view === 'calendar'"-->
-<!--        :meetups="filteredMeetups"-->
-<!--        key="calendar"-->
-<!--      ></meetups-calendar>-->
 
     </transition>
 
