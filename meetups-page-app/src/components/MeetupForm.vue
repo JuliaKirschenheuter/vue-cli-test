@@ -56,7 +56,7 @@
         <button
           class="button button_primary button_block"
           type="submit">
-          Submit
+          {{submitButton}}
         </button>
       </div>
     </div>
@@ -80,6 +80,9 @@ export default {
     meetup: {
       type: Object,
       required: true
+    },
+    submitButton: {
+      type: String
     }
   },
 

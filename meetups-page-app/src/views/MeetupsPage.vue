@@ -26,7 +26,7 @@
       </div>
     </div>
 
-    <transition
+    <fade-transition
       v-if="filteredMeetups && filteredMeetups.length"
       name="fade"
       mode="out-in">
@@ -36,7 +36,7 @@
                    :meetups="filteredMeetups"></component>
       </keep-alive>
 
-    </transition>
+    </fade-transition>
 
     <app-empty v-else>Митапов по заданным условям не найдено...</app-empty>
 
@@ -51,9 +51,10 @@ import AppIcon from '@/components/AppIcon'
 import AppEmpty from '@/components/AppEmpty'
 import MeetupsList from '@/components/MeetupsList'
 import MeetupsCalendar from '@/components/MeetupsCalendar'
+import FadeTransition from '@/components/FadeTransition'
 export default {
   name: 'MeetupsPage',
-  components: { MeetupsCalendar, MeetupsList, AppEmpty, AppIcon, PageTabs, FormCheck },
+  components: { FadeTransition, MeetupsCalendar, MeetupsList, AppEmpty, AppIcon, PageTabs, FormCheck },
 
   data () {
     return {

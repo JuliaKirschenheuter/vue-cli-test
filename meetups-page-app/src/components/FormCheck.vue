@@ -1,16 +1,17 @@
 <template>
-<div class="form-check">
-  <div v-for="option in options" :key="option.value" class="form-check__group">
-    <input
-      class="form-check__input"
-      type="radio"
-      :name="radioGroupName"
-      :value="option.value"
-      :checked="option.value === selected"
-      @input="$emit('change', option.value)"
-    />
+  <div class="form-check">
+    <div v-for="option in options" :key="option.value" class="form-check__group">
+      <input
+        class="form-check__input"
+        type="radio"
+        :name="radioGroupName"
+        :value="option.value"
+        :checked="option.value === selected"
+        @input="$emit('change', option.value)"
+      />
+      <label class="form-check__label">{{ option.text }}</label>
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -36,7 +37,6 @@ export default {
     prop: 'selected',
     event: 'change'
   }
-
 }
 </script>
 

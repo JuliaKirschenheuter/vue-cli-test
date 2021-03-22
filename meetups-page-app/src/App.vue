@@ -10,7 +10,7 @@
           </h1>
         </div>
         <nav>
-          <router-link :to="{name: 'meetups-list'}" v-if="$route.meta.showBackToList"> &larr; Вернуться к списку
+          <router-link :to="{name: 'meetups-list'}" v-if="$route.meta.showReturnToMeetups"> &larr; Вернуться к списку
           </router-link>
           <router-link :to="{ name: 'meetups', query: { participation: 'attending' } }">Мои митапы</router-link>
           <router-link :to="{ name: 'meetups', query: { participation: 'organizing' } }">Организуемые митапы

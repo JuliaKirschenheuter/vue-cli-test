@@ -1,20 +1,21 @@
 <template>
   <div class="meetups-list transition-list">
-    <transition-group name="transition-list">
+    <fade-transition-group name="transition-list">
       <meetups-list-item
       v-for="meetup in meetups"
       :key="meetup.id"
       :meetup="meetup">
       </meetups-list-item>
-    </transition-group>
+    </fade-transition-group>
   </div>
 </template>
 
 <script>
 import MeetupsListItem from '@/components/MeetupsListItem'
+import FadeTransitionGroup from '@/components/FadeTransitionGroup'
 export default {
   name: 'MeetupsList',
-  components: { MeetupsListItem },
+  components: { FadeTransitionGroup, MeetupsListItem },
   props: {
     meetups: {
       type: Array,

@@ -2,7 +2,7 @@
   <div class="container" v-if="meetup_">
     <h1>Редактировать: {{ meetup_.title }}</h1>
     <pre><code>{{ meetup_ }}</code></pre>
-    <meetup-form @cancel="handleCancel" @submit="handleSubmit" :meetup="meetup_"></meetup-form>
+    <meetup-form @cancel="handleCancel" @submit="handleSubmit" :meetup="meetup_" :submitButton="submitButton"></meetup-form>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
 
   data () {
     return {
-      meetup_: null
+      meetup_: null,
+      submitButton: 'Сохранить'
     }
   },
 

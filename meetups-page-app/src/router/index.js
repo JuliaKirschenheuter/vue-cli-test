@@ -20,7 +20,7 @@ const routes = [
     name: 'meetup-page',
     component: () => import('@/views/MeetupPage'),
     meta: {
-      showBackToList: true
+      showReturnToMeetups: true
     },
     redirect: '/meetups/:meetupId/description', // можно так делать?
     children: [

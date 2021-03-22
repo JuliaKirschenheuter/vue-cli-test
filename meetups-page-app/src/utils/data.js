@@ -1,3 +1,5 @@
+import { random } from 'nanoid'
+
 export const API_URL = process.env.VUE_APP_API_URL
 
 export async function fetchMeetups () {
@@ -38,17 +40,6 @@ export async function register (email, fullname, password) {
   }).then((res) => res.json())
 }
 
-export const agendaItemTitles = {
-  registration: 'Регистрация',
-  opening: 'Открытие',
-  break: 'Перерыв',
-  coffee: 'Coffee Break',
-  closing: 'Закрытие',
-  afterparty: 'Afterparty',
-  talk: 'Доклад',
-  other: 'Другое'
-}
-
 export const agendaItemIcons = {
   registration: 'key',
   opening: 'cal-sm',
@@ -62,7 +53,7 @@ export const agendaItemIcons = {
 
 export function buildAgendaItem () {
   return {
-    id: Math.random(),
+    id: random(1)[0],
     startsAt: '00:00',
     endsAt: '00:00',
     type: 'other',
@@ -75,7 +66,7 @@ export function buildAgendaItem () {
 
 export function buildEmptyMeetup () {
   return {
-    id: Math.random().toFixed(1),
+    id: random(1)[0],
     title: '',
     description: '',
     imageId: null,
@@ -97,7 +88,7 @@ export const getAgendaItemTypes = () => [
 ]
 
 export const getTalkLanguages = () => [
-  { value: null, text: 'Не указано', id: Math.random() },
-  { value: 'RU', text: 'RU', id: Math.random() },
-  { value: 'EN', text: 'EN', id: Math.random() }
+  { value: null, text: 'Не указано', id: random(1)[0] },
+  { value: 'RU', text: 'RU', id: random(1)[0] },
+  { value: 'EN', text: 'EN', id: random(1)[0] }
 ]

@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { agendaItemIcons, agendaItemTitles } from '@/utils/data'
+import { agendaItemIcons, getAgendaItemTypes } from '@/utils/data'
 import AppIcon from '@/components/AppIcon'
 
 export default {
@@ -37,7 +37,7 @@ export default {
     processedAgenda () {
       if (this.agendaItem) {
         return Object.assign({}, this.agendaItem, {
-          defaultTitle: agendaItemTitles[this.agendaItem.type],
+          defaultTitle: getAgendaItemTypes()[this.agendaItem.type],
           defaultIcon: agendaItemIcons[this.agendaItem.type]
         })
       }

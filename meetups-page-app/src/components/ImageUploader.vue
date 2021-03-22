@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import { random } from 'nanoid'
+
 export default {
   name: 'ImageUploader',
 
@@ -21,7 +23,7 @@ export default {
 
   methods: {
     fileSelected () {
-      this.$emit('change', Math.round(Math.random() * 10) || null)
+      this.$emit('change', Math.round(random(1)[0] * 10) || null)
     }
   }
 }
