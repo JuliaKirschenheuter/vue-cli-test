@@ -45,19 +45,15 @@
 
     <div class="meetup-form__aside">
       <div class="meetup-form__aside_stick">
-        <button
-          class="button button_secondary button_block"
-          type="button"
-          ref="cancelButton"
+        <danger-button
           @click="$emit('cancel')"
         >
           Отмена
-        </button>
-        <button
-          class="button button_primary button_block"
+        </danger-button>
+        <primary-button
           type="submit">
           {{submitButton}}
-        </button>
+        </primary-button>
       </div>
     </div>
   </form>
@@ -68,10 +64,14 @@ import { buildAgendaItem } from '@/utils/data'
 import deepClone from 'lodash.clonedeep'
 import ImageUploader from '@/components/ImageUploader'
 import MeetupAgendaItemForm from '@/components/MeetupAgendaItemForm'
+import DangerButton from '@/components/DangerButton'
+import PrimaryButton from '@/components/PrimaryButton'
 
 export default {
   name: 'MeetupForm',
   components: {
+    PrimaryButton,
+    DangerButton,
     MeetupAgendaItemForm,
     ImageUploader
   },

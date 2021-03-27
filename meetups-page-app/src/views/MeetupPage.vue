@@ -7,10 +7,10 @@
     </div>
     <div class="container">
       <div class="buttons">
-        <button type="button" class="button button_secondary">Участвовать</button>
-        <button type="button" class="button button_secondary">Отменить участие</button>
+        <secondary-button >Участвовать</secondary-button>
+        <secondary-button>Отменить участие</secondary-button>
         <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetupId: meetup.id } }">Редактировать</router-link>
-        <button type="button" class="button button_secondary">Удалить</button>
+        <secondary-button>Удалить</secondary-button>
       </div>
       <div class="meetup">
         <div class="meetup__content">
@@ -32,10 +32,11 @@
 import { fetchMeetup, getMeetupCoverLink } from '@/utils/data'
 import MeetupInfo from '@/views/MeetupInfo'
 import ContentTabs from '@/components/ContentTabs'
+import SecondaryButton from '@/components/SecondaryButton'
 
 export default {
   name: 'MeetupPage',
-  components: { ContentTabs, MeetupInfo },
+  components: { SecondaryButton, ContentTabs, MeetupInfo },
   data () {
     return {
       meetup: null,
@@ -46,8 +47,21 @@ export default {
     }
   },
 
-  mounted () {
-    fetchMeetup(this.$route.params.meetupId).then(meetup => this.setMeetup(meetup))
+  beforeRouteEnter (to, from, next) {
+    fetchMeetup(to.params.meetupId).then((meetup) => {
+      next((vm) => vm.setMeetup(meetup))
+    })
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    if (to.params.meetupId === from.params.meetupId) {
+      next()
+    } else {
+      fetchMeetup(to.params.meetupId).then((meetup) => {
+        this.setMeetup(meetup)
+        next()
+      })
+    }
   },
 
   computed: {

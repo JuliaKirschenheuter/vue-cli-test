@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { random } from 'nanoid'
+
 export default {
   name: 'FormCheck',
   props: {
@@ -25,10 +27,9 @@ export default {
     selected: String
   },
 
-  // todo: no Math.random()
   data () {
     return {
-      radioGroupName: Math.random()
+      radioGroupName: random(1)[0]
     }
   },
 

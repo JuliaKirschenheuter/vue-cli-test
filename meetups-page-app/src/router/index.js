@@ -3,7 +3,28 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const routes = [
+function scrollBehavior (to, from, savedPosition) {
+  if (to.hash) {
+    return {
+      selector: to.hash
+    }
+  }
+
+  if (to.meta.saveScrollPosition && from.meta.saveScrollPosition) {
+    return false
+  }
+
+  if (savedPosition) {
+    return savedPosition
+  } else {
+    return {
+      x: 0,
+      y: 0
+    }
+  }
+}
+
+export const routes = [
   {
     path: '/',
     name: 'index',
@@ -15,14 +36,14 @@ const routes = [
     redirect: '/'
   },
   {
-    path: '/meetups/:meetupId',
-    // https://router.vuejs.org/ru/guide/advanced/navigation-guards.html
+    path: '/meetups/:meetupId(\\d+)',
     name: 'meetup-page',
     component: () => import('@/views/MeetupPage'),
     meta: {
-      showReturnToMeetups: true
+      showBackToList: true,
+      saveScrollPosition: true
     },
-    redirect: '/meetups/:meetupId/description', // можно так делать?
+    redirect: (to) => ({ name: 'meetup-description', params: to.params }),
     children: [
       {
         path: 'description',
@@ -79,9 +100,10 @@ const routes = [
   }
 ]
 
-const router = new VueRouter({
+export const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
+  scrollBehavior,
   routes
 })
 

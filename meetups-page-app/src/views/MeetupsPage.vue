@@ -1,69 +1,25 @@
 <template>
   <div class="container">
-    <div class="filters-panel">
-      <div class="filters-panel__col">
-        <form-check :options="dateFilterOptions" v-model="filter.date"></form-check>
-      </div>
-
-      <div class="filters-panel__col">
-        <div class="form-group form-group_inline">
-          <div class="input-group input-group_icon input-group_icon-left">
-            <app-icon icon="search"/>
-            <input
-              id="filters-panel__search"
-              class="form-control form-control_rounded form-control_sm"
-              type="text"
-              placeholder="Поиск"
-              v-model="filter.search"
-            />
-          </div>
-        </div>
-        <div class="form-group form-group_inline">
-          <page-tabs
-            :selected.sync="filter.view"
-          ></page-tabs>
-        </div>
-      </div>
-    </div>
-
-    <fade-transition
-      v-if="filteredMeetups && filteredMeetups.length"
-      name="fade"
-      mode="out-in">
-
-      <keep-alive>
-        <component :is="viewComponent"
-                   :meetups="filteredMeetups"></component>
-      </keep-alive>
-
-    </fade-transition>
-
-    <app-empty v-else>Митапов по заданным условям не найдено...</app-empty>
-
+    <meetups-view :meetups="processedMeetups" :filter.sync="filter" ></meetups-view>
   </div>
 </template>
 
 <script>
-import FormCheck from '@/components/FormCheck'
+
 import { API_URL, fetchMeetups } from '@/utils/data'
-import PageTabs from '@/components/PageTabs'
-import AppIcon from '@/components/AppIcon'
-import AppEmpty from '@/components/AppEmpty'
-import MeetupsList from '@/components/MeetupsList'
-import MeetupsCalendar from '@/components/MeetupsCalendar'
-import FadeTransition from '@/components/FadeTransition'
+import MeetupsView from '@/components/MeetupsView'
 export default {
   name: 'MeetupsPage',
-  components: { FadeTransition, MeetupsCalendar, MeetupsList, AppEmpty, AppIcon, PageTabs, FormCheck },
+  components: { MeetupsView },
 
   data () {
     return {
       meetups: [],
       filter: {
-        date: '',
-        participation: '',
-        search: '',
-        view: ''
+        view: 'list',
+        date: 'all',
+        participation: 'all',
+        search: ''
       }
     }
   },
@@ -87,58 +43,51 @@ export default {
       }))
     },
 
-    filteredMeetups () {
-      let filteredMeetups = this.processedMeetups
-      if (this.filter.date === 'past') {
-        filteredMeetups = filteredMeetups.filter(meetup => {
-          return new Date(meetup.date) <= new Date()
-        }
-        )
-      }
-      if (this.filter.date === 'future') {
-        filteredMeetups = filteredMeetups.filter(meetup => {
-          return new Date(meetup.date) > new Date()
-        }
-        )
-      }
-      if (this.filter.participation === 'organizing') {
-        filteredMeetups = filteredMeetups.filter(meetup => {
-          return meetup.organizing
-        })
-      }
-      if (this.filter.participation === 'attending') {
-        filteredMeetups = filteredMeetups.filter(meetup => {
-          return meetup.attending
-        })
-      }
-      if (this.filter.search) {
-        const concatMeetupText = meetup =>
-          [meetup.title, meetup.description, meetup.place, meetup.organizer]
-            .join(' ')
-            .toLowerCase()
-        filteredMeetups = filteredMeetups.filter(meetup =>
-          concatMeetupText(meetup).includes(this.filter.search.toLowerCase())
-        )
-      }
-      return filteredMeetups
-    },
+    routeQuery () {
+      console.log(this.$route.query)
+      return this.$route.query
+    }
 
-    dateFilterOptions () {
-      return [
-        { text: 'Все', value: '' },
-        { text: 'Прошедшие', value: 'past' },
-        { text: 'Ожидаемые', value: 'future' }
-      ]
-    },
+  },
 
-    viewComponent () {
-      return this.filter.view === 'list' || this.filter.view === '' ? MeetupsList : MeetupsCalendar
+  watch: {
+    'filter.date': function () {
+      this.routerReplace()
+    },
+    'filter.participation': function () {
+      this.routerReplace()
+    },
+    'filter.search': function () {
+      this.routerReplace()
+    },
+    'filter.view': function () {
+      this.routerReplace()
+    },
+    routeQuery: {
+      immediate: true,
+      handler: function () {
+        this.filter.date = this.$route.query.date ? this.$route.query.date : 'all'
+        this.filter.participation = this.$route.query.participation ? this.$route.query.participation : 'all'
+        this.filter.view = this.$route.query.view ? this.$route.query.view : 'list'
+        this.filter.search = this.$route.query.search ? this.$route.query.search : ''
+      }
     }
   },
 
   methods: {
     async fetchMeetups () {
       return fetchMeetups()
+    },
+
+    routerReplace () {
+      this.$router.replace({
+        query: {
+          participation: (this.filter.participation === '') ? undefined : this.filter.participation,
+          date: (this.filter.date === '') ? undefined : this.filter.date,
+          view: (this.filter.view === '') ? undefined : this.filter.view,
+          search: (this.filter.search === '') ? undefined : this.filter.search
+        }
+      }).catch(() => {})
     }
   }
 }

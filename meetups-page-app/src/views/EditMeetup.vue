@@ -28,8 +28,21 @@ export default {
     }
   },
 
-  mounted () {
-    fetchMeetup(this.meetupId).then(meetup => this.setMeetup(meetup))
+  beforeRouteEnter (to, from, next) {
+    fetchMeetup(to.params.meetupId).then((meetup) => {
+      next((vm) => vm.setMeetup(meetup))
+    })
+  },
+
+  beforeRouteUpdate (to, from, next) {
+    if (to.params.meetupId === from.params.meetupId) {
+      next()
+    } else {
+      fetchMeetup(to.params.meetupId).then((meetup) => {
+        this.setMeetup(meetup)
+        next()
+      })
+    }
   },
 
   methods: {
