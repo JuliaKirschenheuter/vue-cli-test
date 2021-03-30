@@ -1,5 +1,5 @@
 <template>
-  <form class="form meetup-form" @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit">
 
     <div class="meetup-form__content">
       <fieldset class="form-section">

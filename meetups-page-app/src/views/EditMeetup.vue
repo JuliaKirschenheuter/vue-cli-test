@@ -1,37 +1,42 @@
 <template>
   <div class="container" v-if="meetup_">
     <h1>Редактировать: {{ meetup_.title }}</h1>
-    <pre><code>{{ meetup_ }}</code></pre>
-    <meetup-form @cancel="handleCancel" @submit="handleSubmit" :meetup="meetup_" :submitButton="submitButton"></meetup-form>
+    <form-layout :meetup="meetup_" :meetup-id="meetupId_" :submitButton="submitButton"></form-layout>
   </div>
 </template>
 
 <script>
-import MeetupForm from '@/components/MeetupForm'
+import FormLayout from '@/components/FormLayout'
 import { fetchMeetup } from '@/utils/data'
-import deepClone from 'lodash.clonedeep'
 
 export default {
   name: 'EditMeetup',
-  components: { MeetupForm },
+  components: { FormLayout },
   props: {
     meetupId: {
-      type: [Number, String],
-      required: true
+      type: [Number, String]
+    },
+    meetup: {
+      type: Object
     }
   },
 
   data () {
     return {
       meetup_: null,
-      submitButton: 'Сохранить'
+      submitButton: 'Сохранить',
+      meetupId_: this.meetupId
     }
   },
 
   beforeRouteEnter (to, from, next) {
-    fetchMeetup(to.params.meetupId).then((meetup) => {
-      next((vm) => vm.setMeetup(meetup))
-    })
+    if (to.params.meetup !== undefined) {
+      next((vm) => vm.setMeetup(to.params.meetup))
+    } else {
+      fetchMeetup(to.params.meetupId).then((meetup) => {
+        next((vm) => vm.setMeetup(meetup))
+      })
+    }
   },
 
   beforeRouteUpdate (to, from, next) {
@@ -48,17 +53,6 @@ export default {
   methods: {
     setMeetup (meetup) {
       this.meetup_ = meetup
-    },
-    handleCancel () {
-      this.$router.push({
-        name: 'meetup-page',
-        params: {
-          meetupId: this.$route.params.meetupId
-        }
-      })
-    },
-    handleSubmit (meetupFromForm) {
-      this.meetup_ = deepClone(meetupFromForm)
     }
   }
 

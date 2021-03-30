@@ -1,47 +1,32 @@
 <template>
   <div class="container" v-if="meetup_">
     <h1>Создать новый митап</h1>
-    <pre><code>{{ meetup_ }}</code></pre>
-    <meetup-form @cancel="handleCancel" @submit="handleSubmit" :meetup="meetup_" :submitButton="submitButton"></meetup-form>
+    <form-layout :meetup="meetup_" :meetup-id="meetupId_" :submitButton="submitButton"></form-layout>
   </div>
 </template>
 
 <script>
-import MeetupForm from '@/components/MeetupForm'
-import deepClone from 'lodash.clonedeep'
+import { buildEmptyMeetup } from '@/utils/data'
+import FormLayout from '@/components/FormLayout'
 
 export default {
   name: 'CreateNewMeetup',
-  components: { MeetupForm },
-  props: {
-    meetup: {
-      type: Object,
-      required: true
-    }
-  },
+  components: { FormLayout },
 
   data () {
     return {
       meetup_: null,
-      submitButton: 'Создать'
+      submitButton: 'Создать',
+      meetupId_: null
     }
   },
 
   mounted () {
-    this.meetup_ = this.meetup
-  },
-
-  methods: {
-    handleCancel () {
-      this.$router.push({
-        name: 'meetups-list'
-      })
-    },
-
-    handleSubmit (meetupFromForm) {
-      this.meetup_ = deepClone(meetupFromForm)
-    }
+    const emptyMeetup = buildEmptyMeetup()
+    this.meetup_ = emptyMeetup
+    this.meetupId_ = emptyMeetup.id
   }
+
 }
 </script>
 

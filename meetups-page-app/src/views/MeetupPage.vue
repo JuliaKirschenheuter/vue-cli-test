@@ -3,23 +3,23 @@
     <div
       :style="getImgUrl ? `--bg-url: url('${getImgUrl}')` : `${getImgUrl}`"
       class="meetup-cover">
-      <h1 class="meetup-cover__title" v-if="meetup.title">{{ meetup.title }}</h1>
+      <h1 class="meetup-cover__title" v-if="processedMeetup.title">{{ processedMeetup.title }}</h1>
     </div>
     <div class="container">
       <div class="buttons">
         <secondary-button >Участвовать</secondary-button>
         <secondary-button>Отменить участие</secondary-button>
-        <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetupId: meetup.id } }">Редактировать</router-link>
+        <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetup: processedMeetup, meetupId: processedMeetup.id } }">Редактировать</router-link>
         <secondary-button>Удалить</secondary-button>
       </div>
       <div class="meetup">
         <div class="meetup__content">
           <content-tabs :tabs="tabs">
-            <router-view :meetup="meetup" />
+            <router-view :meetup="processedMeetup" />
           </content-tabs>
         </div>
         <div class="meetup__aside">
-          <meetup-info :meetup="meetup"></meetup-info>
+          <meetup-info :meetup="processedMeetup"></meetup-info>
         </div>
       </div>
 
@@ -67,6 +67,15 @@ export default {
   computed: {
     getImgUrl () {
       return getMeetupCoverLink(this.meetup)
+    },
+    processedMeetup () {
+      return Object.assign({}, this.meetup, {
+        date: new Date(this.meetup.date).toLocaleString(navigator.language, {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        })
+      })
     }
   },
 

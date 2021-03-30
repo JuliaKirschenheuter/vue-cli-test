@@ -10,7 +10,7 @@
     </li>
     <li>
       <app-icon icon="cal-lg" class="icon info-list__icon"/>
-      <time datetime="2020-01-01">{{processedMeetup.date}}</time>
+      <time datetime="2020-01-01">{{meetup.date}}</time>
     </li>
   </ul>
 </template>
@@ -24,18 +24,6 @@ export default {
     meetup: {
       type: Object,
       required: true
-    }
-  },
-
-  computed: {
-    processedMeetup () {
-      return Object.assign({}, this.meetup, {
-        date: new Date(this.meetup.date).toLocaleString(navigator.language, {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        })
-      })
     }
   }
 

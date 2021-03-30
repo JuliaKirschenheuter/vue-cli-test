@@ -44,7 +44,6 @@ export default {
     },
 
     routeQuery () {
-      console.log(this.$route.query)
       return this.$route.query
     }
 
