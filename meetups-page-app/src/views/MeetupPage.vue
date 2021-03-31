@@ -70,10 +70,10 @@ export default {
     },
     processedMeetup () {
       return Object.assign({}, this.meetup, {
-        date: new Date(this.meetup.date).toLocaleString(navigator.language, {
+        localDate: new Date(this.meetup.date).toLocaleString(navigator.language, {
           year: 'numeric',
-          month: 'long',
-          day: 'numeric'
+          month: '2-digit',
+          day: '2-digit'
         })
       })
     }

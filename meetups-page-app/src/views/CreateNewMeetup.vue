@@ -1,7 +1,7 @@
 <template>
   <div class="container" v-if="meetup_">
     <h1>Создать новый митап</h1>
-    <form-layout :meetup="meetup_" :meetup-id="meetupId_" :submitButton="submitButton"></form-layout>
+    <form-layout :meetup="processedEmptyMeetup" :meetup-id="meetupId_" :submitButton="submitButton"></form-layout>
   </div>
 </template>
 
@@ -22,11 +22,21 @@ export default {
   },
 
   mounted () {
-    const emptyMeetup = buildEmptyMeetup()
-    this.meetup_ = emptyMeetup
-    this.meetupId_ = emptyMeetup.id
-  }
+    this.meetup_ = buildEmptyMeetup()
+    this.meetupId_ = this.meetup_.id
+  },
 
+  computed: {
+    processedEmptyMeetup () {
+      return Object.assign({}, this.meetup_, {
+        localDate: new Date(this.meetup_.date).toLocaleString(navigator.language, {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        })
+      })
+    }
+  }
 }
 </script>
 

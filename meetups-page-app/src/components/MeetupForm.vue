@@ -9,7 +9,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Дата</label>
-          <input class="form-control" type="date" v-model="meetup_.date"/>
+          <input class="form-control" type="data" placeholder="01.01.2020"  v-model="meetup_.localDate"/>
         </div>
         <div class="form-group">
           <label class="form-label">Место</label>

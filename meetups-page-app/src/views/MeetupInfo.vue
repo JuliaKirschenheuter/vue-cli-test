@@ -10,7 +10,7 @@
     </li>
     <li>
       <app-icon icon="cal-lg" class="icon info-list__icon"/>
-      <time datetime="2020-01-01">{{meetup.date}}</time>
+      <time datetime="2020-01-01">{{meetup.localDate}}</time>
     </li>
   </ul>
 </template>
