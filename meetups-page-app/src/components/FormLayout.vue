@@ -39,12 +39,18 @@ export default {
 
   methods: {
     handleCancel () {
-      this.$router.push({
-        name: 'meetup-page',
-        params: {
-          meetupId: this.$route.params.meetupId
-        }
-      })
+      if (this.$route.params.meetupId) {
+        this.$router.push({
+          name: 'meetup-page',
+          params: {
+            meetupId: this.$route.params.meetupId
+          }
+        })
+      } else {
+        this.$router.push({
+          name: 'meetups-list'
+        })
+      }
     },
     handleSubmit (meetupFromForm) {
       this.meetup_ = deepClone(meetupFromForm)
