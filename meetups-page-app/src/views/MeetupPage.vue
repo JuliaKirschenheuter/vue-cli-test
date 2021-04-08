@@ -7,10 +7,12 @@
     </div>
     <div class="container">
       <div class="buttons">
-        <secondary-button >Участвовать</secondary-button>
-        <secondary-button>Отменить участие</secondary-button>
-        <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetup: processedMeetup, meetupId: processedMeetup.id } }">Редактировать</router-link>
-        <secondary-button>Удалить</secondary-button>
+        <div class="meetup__aside-buttons">
+          <secondary-button >Участвовать</secondary-button>
+          <secondary-button>Отменить участие</secondary-button>
+          <router-link class="button button_secondary" :to="{ name: 'edit-meetup', params: { meetup: processedMeetup, meetupId: processedMeetup.id } }">Редактировать</router-link>
+          <secondary-button>Удалить</secondary-button>
+        </div>
       </div>
       <div class="meetup">
         <div class="meetup__content">

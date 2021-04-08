@@ -1,21 +1,22 @@
 <template>
-  <div class="container" v-if="meetup_">
-    <h1>Редактировать: {{ meetup_.title }}</h1>
-    <form-layout :meetup="meetup_" :meetup-id="meetupId_" :submitButton="submitButton"></form-layout>
+  <div v-if="meetup_">
+    <form-layout :title="meetup_.title" >
+      <pre><code>{{ meetup_ }}</code></pre>
+      <meetup-form :meetup="meetup_" :submitButton="submitButton" @cancel="handleCancel" @submit="handleSubmit"></meetup-form>
+    </form-layout>
   </div>
 </template>
 
 <script>
 import FormLayout from '@/components/FormLayout'
 import { fetchMeetup } from '@/utils/data'
+import MeetupForm from '@/components/MeetupForm'
+import deepClone from 'lodash.clonedeep'
 
 export default {
   name: 'EditMeetup',
-  components: { FormLayout },
+  components: { MeetupForm, FormLayout },
   props: {
-    meetupId: {
-      type: [Number, String]
-    },
     meetup: {
       type: Object
     }
@@ -24,8 +25,7 @@ export default {
   data () {
     return {
       meetup_: null,
-      submitButton: 'Сохранить',
-      meetupId_: this.meetupId
+      submitButton: 'Сохранить'
     }
   },
 
@@ -53,6 +53,19 @@ export default {
   methods: {
     setMeetup (meetup) {
       this.meetup_ = meetup
+    },
+
+    handleSubmit (meetupFromForm) {
+      this.meetup_ = deepClone(meetupFromForm)
+    },
+
+    handleCancel () {
+      this.$router.push({
+        name: 'meetup-page',
+        params: {
+          meetupId: this.$route.params.meetupId
+        }
+      })
     }
   }
 

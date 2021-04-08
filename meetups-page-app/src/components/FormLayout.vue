@@ -1,61 +1,23 @@
 <template>
-  <div>
-    <pre><code>{{ meetup_ }}</code></pre>
-    <meetup-form class="form meetup-form"
-       @cancel="handleCancel"
-       @submit="handleSubmit"
-       :meetup="meetup"
-       :submitButton="submitButton">
+  <div class="page page_meetup-forms">
+    <div class="container">
+      <h1 class="page__title text-center">{{title}}</h1>
       <slot></slot>
-    </meetup-form>
+    </div>
   </div>
-
 </template>
 
 <script>
-import MeetupForm from '@/components/MeetupForm'
-import deepClone from 'lodash.clonedeep'
 
 export default {
   name: 'FormLayout',
-  components: { MeetupForm },
 
   props: {
-    meetupId: {
-      type: [Number, String],
-      required: true
-    },
-    meetup: {
-      type: Object
-    },
-    submitButton: String
-  },
-
-  data () {
-    return {
-      meetup_: null
-    }
-  },
-
-  methods: {
-    handleCancel () {
-      if (this.$route.params.meetupId) {
-        this.$router.push({
-          name: 'meetup-page',
-          params: {
-            meetupId: this.$route.params.meetupId
-          }
-        })
-      } else {
-        this.$router.push({
-          name: 'meetups-list'
-        })
-      }
-    },
-    handleSubmit (meetupFromForm) {
-      this.meetup_ = deepClone(meetupFromForm)
+    title: {
+      type: String
     }
   }
+
 }
 </script>
 
